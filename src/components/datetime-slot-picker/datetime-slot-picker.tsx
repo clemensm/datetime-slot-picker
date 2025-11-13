@@ -111,7 +111,6 @@ export class DatetimeSlotPicker {
   }
 
   private setSlot() {
-      debugger
     let translatedSelectedDate: string, translatedSelectedTime: string;
     if (this.dateFormat === 'YYYY-MM-DD') {
       let formattedDate = new Date(this.selectedDate);
