@@ -1,7 +1,6 @@
 import { Slot } from '../models/slot';
 import { DateGrid, Week } from '../models/date-grid';
 
-const monthIndex = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -13,14 +12,8 @@ export function generateDateGrid(slots: Slot[]): DateGrid[] {
   let isInputValid = true;
   let minDate: Date, maxDate: Date;
   for (let slot of slots) {
-    if (slot.date && slot.date.substring(5) && slot.date.substring(5).split(' ').length === 3 &&
-      monthIndex[slot.date.substring(5).split(' ')[1]] > -1 && parseInt(slot.date.substring(5).split(' ')[2])
-      && parseInt(slot.date.substring(5).split(' ')[0])) {
-      let parsedDate = new Date(
-        parseInt(slot.date.substring(5).split(' ')[2]),
-        monthIndex[slot.date.substring(5).split(' ')[1]],
-        parseInt(slot.date.substring(5).split(' ')[0])
-      );
+    if (slot.date && slot.date.match(/^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/)) {
+      let parsedDate = new Date(slot.date);
       if (!minDate || minDate > parsedDate) minDate = parsedDate;
       if (!maxDate || maxDate < parsedDate) maxDate = parsedDate;
     } else {
@@ -46,11 +39,15 @@ export function generateDateGrid(slots: Slot[]): DateGrid[] {
       for (let dayCounter = 1; dayCounter <= lastDate.getDate(); dayCounter++) {
         let currentDate = new Date(y1, m1, dayCounter);
         let dateText = days[currentDate.getDay()] + ', ' + dayCounter + ' ' + months[m1] + ' ' + y1;
-        let slot = slots.find(s => s.date === dateText);
+
+        let cmpText = `${y1}-${m1 + 1}-${dayCounter}`;
+        let slot = slots.find(s => s.date === cmpText);
+
         allDays.push({
           dayOfMonth: dayCounter,
           isEnabled: slot ? true : false,
-          dateText: dateText
+          dateText: dateText,
+          isoDate: cmpText
         });
       }
       for (let backPadCounter = allDays.length + 1; backPadCounter <= 42; backPadCounter++) {

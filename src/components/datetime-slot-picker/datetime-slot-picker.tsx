@@ -86,13 +86,13 @@ export class DatetimeSlotPicker {
     }
   }
 
-  private setSelectedDate(dateText: string) {
+  private setSelectedDate(dateText: string, isoDateText: string) {
     if (dateText) {
       this.selectedDate = dateText;
       if (this.slots.length && this.slots[0].timeSlots) {
         //resetSlot until time is also chosen
         if (this.displayText) this.resetSlot();
-        let slot = this.slots.find(s => s.date === this.selectedDate);
+        let slot = this.slots.find(s => s.date === isoDateText);
         this.timeGrids = generateTimeGrid(slot, this.datesHiddenWhenTimesShown);
         this.selectedTime = undefined;
         if (this.timeGrids && this.timeGrids.length) this.activeTimeGridPage = 0;
@@ -110,7 +110,12 @@ export class DatetimeSlotPicker {
   }
 
   private setSlot() {
+      debugger
     let translatedSelectedDate: string, translatedSelectedTime: string;
+    if (this.dateFormat === 'YYYY-MM-DD') {
+      let formattedDate = new Date(this.selectedDate);
+      translatedSelectedDate = `${(formattedDate.getFullYear())}-${formattedDate.getMonth() + 1}-${formattedDate.getDate()}`;
+    }
     if (this.dateFormat === 'MM-DD-YYYY') {
       let formattedDate = new Date(this.selectedDate);
       translatedSelectedDate = `${(formattedDate.getMonth() + 1)}-${formattedDate.getDate()}-${formattedDate.getFullYear()}`;
@@ -261,7 +266,7 @@ export class DatetimeSlotPicker {
                     return day
                       ? <td
                         class={!day.isEnabled ? 'neo-td neo-cell neo-cell-disabled' : (day.dateText == this.selectedDate ? 'neo-td neo-cell neo-cell-selected' : 'neo-td neo-cell neo-cell-enabled')}
-                        onClick={() => this.setSelectedDate(day.isEnabled ? day.dateText : undefined)}
+                        onClick={() => this.setSelectedDate(day.isEnabled ? day.dateText : undefined, day.isEnabled ? day.isoDate : undefined)}
                       >
                         <span class={!day.isEnabled ? 'neo-day neo-day-disabled' : (day.dateText == this.selectedDate ? 'neo-day neo-day-selected' : 'neo-day neo-day-enabled')}>
                           {day.dayOfMonth}

@@ -8,5 +8,6 @@ export interface Week {
 export interface Day {
   dayOfMonth: number,
   isEnabled: boolean,
-  dateText: string //Eg: Wed, 25 Nov 2020 (standard format)
+  dateText: string, //Eg: Wed, 25 Nov 2020 (standard format)
+  isoDate: string
 }
