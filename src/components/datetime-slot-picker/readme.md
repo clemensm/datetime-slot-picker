@@ -12,6 +12,7 @@
 | `dateFormat`                | `date-format`                   |             | `string`       | `'ddd, D MMM YYYY'`        |
 | `datesHiddenWhenTimesShown` | `dates-hidden-when-times-shown` |             | `boolean`      | `false`                    |
 | `language`                  | `language`                      |             | `string`       | `'en'`                     |
+| `name`                      | `name`                          |             | `string`       | `''`                       |
 | `noSlotsText`               | `no-slots-text`                 |             | `string`       | `'No slots are available'` |
 | `placeholder`               | `placeholder`                   |             | `string`       | `'Pick a slot'`            |
 | `slots`                     | --                              |             | `Slot[]`       | `[]`                       |

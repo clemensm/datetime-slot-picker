@@ -14,6 +14,7 @@ import { generateTimeGrid } from '../../utils/generate-time-grid';
 export class DatetimeSlotPicker {
 
   @Prop() placeholder: string = 'Pick a slot';
+  @Prop() name: string = '';
   @Prop() timeSlotsText: string = 'Time Slot';
   @Prop() noSlotsText: string = 'No slots are available';
   @Prop() dateFormat: string = 'ddd, D MMM YYYY';
@@ -230,6 +231,7 @@ export class DatetimeSlotPicker {
     return <span class="neo-slot-picker">
       <input class="neo-input" type="text" readonly
         placeholder={this.placeholder}
+        name={this.name}
         value={this.displayText}
         onClick={() => this.togglePopup()}
         ref={(el) => this.neoInput = el as HTMLInputElement}

@@ -12,6 +12,7 @@ export namespace Components {
         "dateFormat": string;
         "datesHiddenWhenTimesShown": boolean;
         "language": string;
+        "name": string;
         "noSlotsText": string;
         "placeholder": string;
         "slots": Slot[];
@@ -36,6 +37,7 @@ declare namespace LocalJSX {
         "dateFormat"?: string;
         "datesHiddenWhenTimesShown"?: boolean;
         "language"?: string;
+        "name"?: string;
         "noSlotsText"?: string;
         "onSlotUpdate"?: (event: CustomEvent<any>) => void;
         "placeholder"?: string;
