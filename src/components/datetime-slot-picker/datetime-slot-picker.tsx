@@ -194,6 +194,8 @@ export class DatetimeSlotPicker {
         let hourPart = justTimePart.split(':')[0].trim();
         if (hourPart.indexOf('12') !== 0) hourPart = (parseInt(hourPart) + 12).toString();
         return hourPart + ':' + (justTimePart.split(':')[1] ? justTimePart.split(':')[1].trim() : '00');
+      } else {
+        return justTimePart;
       }
     };
     //Util function - ends
