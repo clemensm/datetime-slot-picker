@@ -15,6 +15,8 @@ export class DatetimeSlotPicker {
 
   @Prop() placeholder: string = 'Pick a slot';
   @Prop() name: string = '';
+  @Prop() nameDateInput: string = '';
+  @Prop() nameTimeInput: string = '';
   @Prop() timeSlotsText: string = 'Time Slot';
   @Prop() noSlotsText: string = 'No slots are available';
   @Prop() dateFormat: string = 'ddd, D MMM YYYY';
@@ -36,6 +38,8 @@ export class DatetimeSlotPicker {
   @State() timeGrids: TimeGrid[];
   @State() selectedTime: string; //Eg: 10 AM, 10:00 AM, 10 AM - 11 AM, 10:00 AM - 11:00 AM
   @State() displayText: string;
+  @State() isoDateText: string;
+  @State() isoTimeText: string;
 
   @Event() slotUpdate: EventEmitter;
 
@@ -66,6 +70,8 @@ export class DatetimeSlotPicker {
       this.selectedDate = undefined;
       this.selectedTime = undefined;
       this.displayText = undefined;
+      this.isoDateText = undefined;
+      this.isoTimeText = undefined;
       this.dateGrids = generateDateGrid(slots);
       if (this.dateGrids && this.dateGrids.length) this.activeDateGridPage = 0;
     }
@@ -112,9 +118,13 @@ export class DatetimeSlotPicker {
 
   private setSlot() {
     let translatedSelectedDate: string, translatedSelectedTime: string;
+
+    const isoDate = new Date(this.selectedDate);
+    this.isoDateText = `${isoDate.getFullYear()}-${isoDate.getMonth() + 1}-${isoDate.getDate()}`;
+    this.isoTimeText = this.selectedTime;
+
     if (this.dateFormat === 'YYYY-MM-DD') {
-      let formattedDate = new Date(this.selectedDate);
-      translatedSelectedDate = `${(formattedDate.getFullYear())}-${formattedDate.getMonth() + 1}-${formattedDate.getDate()}`;
+      translatedSelectedDate = this.isoDateText;
     }
     if (this.dateFormat === 'MM-DD-YYYY') {
       let formattedDate = new Date(this.selectedDate);
@@ -131,6 +141,7 @@ export class DatetimeSlotPicker {
       translatedSelectedTime = translatedSelectedTime.replace(/PM/g, this.getTranslation('PM'));
     }
     this.displayText = translatedSelectedDate + (this.selectedTime ? (', ' + translatedSelectedTime) : '');
+
     this.slotUpdate.emit({
       date: this.selectedDate,
       timeSlot: this.selectedTime,
@@ -143,6 +154,8 @@ export class DatetimeSlotPicker {
 
   private resetSlot() {
     this.displayText = undefined;
+    this.isoDateText = undefined;
+    this.isoTimeText = undefined;
     this.slotUpdate.emit({
       date: null,
       timeSlot: null,
@@ -157,6 +170,8 @@ export class DatetimeSlotPicker {
     if (!this.displayText) {
       this.selectedDate = undefined;
       this.selectedTime = undefined;
+      this.isoDateText = undefined;
+      this.isoTimeText = undefined;
     }
   }
 
@@ -234,6 +249,16 @@ export class DatetimeSlotPicker {
         value={this.displayText}
         onClick={() => this.togglePopup()}
         ref={(el) => this.neoInput = el as HTMLInputElement}
+      >
+      </input>
+      <input type="hidden"
+        name={this.nameDateInput}
+        value={this.isoDateText}
+      >
+      </input>
+      <input type="hidden"
+        name={this.nameTimeInput}
+        value={this.isoTimeText}
       >
       </input>
       {this.isPopped &&

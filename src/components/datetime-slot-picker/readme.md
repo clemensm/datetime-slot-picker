@@ -13,6 +13,8 @@
 | `datesHiddenWhenTimesShown` | `dates-hidden-when-times-shown` |             | `boolean`      | `false`                    |
 | `language`                  | `language`                      |             | `string`       | `'en'`                     |
 | `name`                      | `name`                          |             | `string`       | `''`                       |
+| `nameDateInput`             | `name-date-input`               |             | `string`       | `''`                       |
+| `nameTimeInput`             | `name-time-input`               |             | `string`       | `''`                       |
 | `noSlotsText`               | `no-slots-text`                 |             | `string`       | `'No slots are available'` |
 | `placeholder`               | `placeholder`                   |             | `string`       | `'Pick a slot'`            |
 | `slots`                     | --                              |             | `Slot[]`       | `[]`                       |
